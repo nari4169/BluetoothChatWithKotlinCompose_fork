@@ -42,11 +42,10 @@ class MainActivity : ComponentActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val address = result.data?.getStringExtra(EXTRA_DEVICE_ADDRESS) ?: ""
-            val secure = result.data?.getBooleanExtra(EXTRA_SECURE, true) ?: true
             if (address.isEmpty())
                 return@registerForActivityResult
 
-            viewModel.connect(address, secure)
+            viewModel.connect(address)
         }
     }
 
@@ -77,7 +76,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (viewModel.connectionState.value == ConnectionState.STATE_NONE) {
+        if (viewModel.connectionState == ConnectionState.STATE_NONE) {
             viewModel.start()
         }
     }

@@ -36,7 +36,7 @@ fun FeatureThatRequiresPermissions(viewModel: MainViewModel, content: @Composabl
     )
     when {
         state.allPermissionsGranted -> {
-            viewModel.connectionState.value = ConnectionState.STATE_NONE
+            viewModel.connectionState = ConnectionState.STATE_NONE
             viewModel.start()
             content()
         }
