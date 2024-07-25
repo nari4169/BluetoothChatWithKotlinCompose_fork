@@ -34,7 +34,10 @@ var EXTRA_SECURE = "secure"
 
 class DeviceListActivity : ComponentActivity() {
 
-    private val viewModel by lazy { ViewModelProvider(this)[DeviceListViewModel::class.java] }
+    //private val viewModel by lazy { ViewModelProvider(this)[DeviceListViewModel::class.java] }
+    private val viewModel by lazy {
+        ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[DeviceListViewModel::class.java]
+    }
     private val activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->

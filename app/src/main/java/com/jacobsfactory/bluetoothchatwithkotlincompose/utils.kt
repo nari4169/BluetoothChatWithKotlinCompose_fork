@@ -41,18 +41,24 @@ fun FeatureThatRequiresPermissions(viewModel: MainViewModel, content: @Composabl
             content()
         }
         else -> {
-            val textToShow = if (state.shouldShowRationale)
-                "ShowRationale" else "No permission"
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(textToShow)
-                Spacer(modifier = Modifier.height(8.dp))
-                Button(onClick = { state.launchMultiplePermissionRequest() }) {
-                    Text("Request")
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                viewModel.connectionState = ConnectionState.STATE_NONE
+                viewModel.start()
+                content()
+            } else {
+                val textToShow = if (state.shouldShowRationale)
+                    "ShowRationale" else "No permission"
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(textToShow)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(onClick = { state.launchMultiplePermissionRequest() }) {
+                        Text("Request")
+                    }
                 }
             }
         }
